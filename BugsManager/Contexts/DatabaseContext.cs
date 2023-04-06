@@ -8,5 +8,7 @@ namespace BugsManager.Contexts
         public DatabaseContext(DbContextOptions options): base(options) {}
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Project> Project { get; set; }
     }
 }
