@@ -14,6 +14,7 @@ namespace BugsManager.Repositories
         private DatabaseContext _databaseContext;
         private IUserRepository _userRepository;
         private IProjectRepository _projectRepository;
+        private IBugRepository _bugRepository;
         private IConfiguration _configuration;
 
         public RepositoryManager(DatabaseContext databaseContext, IConfiguration configuration)
@@ -39,6 +40,16 @@ namespace BugsManager.Repositories
                 if (_projectRepository == null)
                     _projectRepository = new ProjectRepository(_databaseContext);
                 return _projectRepository;
+            }
+        }
+
+        public IBugRepository Bug
+        {
+            get
+            {
+                if (_bugRepository == null)
+                    _bugRepository = new BugRepository(_databaseContext);
+                return _bugRepository;
             }
         }
 

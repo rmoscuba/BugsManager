@@ -6,6 +6,8 @@
 
         IProjectRepository Project { get; }
 
+        IBugRepository Bug { get; }
+
         void Save();
     }
 }
