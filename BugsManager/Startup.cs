@@ -1,3 +1,5 @@
+using BugsManager.Contexts;
+using BugsManager.Extensions;
 using BugsManager.Interfaces;
 using BugsManager.Middlewares;
 using BugsManager.Repositories;
@@ -34,12 +36,14 @@ namespace BugsManager
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DatabaseContext ctx)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            ctx.Seed();
 
             app.UseHttpsRedirection();
 
