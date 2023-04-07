@@ -18,15 +18,16 @@ namespace BugsManager.Repositories
                     .OrderBy(b => b.CreationDate)
                     .ToList();
         }
-        public IEnumerable<Bug> GetAllBugsByParams(BugQueryParams bugQueryParams, bool trackChanges)
+        public IEnumerable<BugResultDTO> GetAllBugsByParams(BugQueryParams bugQueryParams, bool trackChanges)
         {
             return FindByCondition(
-                    // TODO: Fix this query
-                    b => b.ProjectId == bugQueryParams.ProjectId
-                    && b.UserId == bugQueryParams.UserId
-                    && bugQueryParams.StartDate <= b.CreationDate
-                    && b.CreationDate <= bugQueryParams.EndDate, 
-                    trackChanges);
+                    b => (b.ProjectId == bugQueryParams.ProjectId || bugQueryParams.ProjectId == null)
+                    && (b.UserId == bugQueryParams.UserId || bugQueryParams.UserId == null)
+                    && (bugQueryParams.StartDate <= b.CreationDate || bugQueryParams.StartDate == null)
+                    && (b.CreationDate <= bugQueryParams.EndDate || bugQueryParams.EndDate == null), 
+                    trackChanges)
+                .Select(b => BugResultDTO.Map(b))
+                .ToList();
         }
 
         public void CreateBug(Bug project) => Create(project);
