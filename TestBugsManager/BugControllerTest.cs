@@ -43,8 +43,8 @@ namespace TestBugsManager
             var result = _bugController.Get(bugQueryParams) as ObjectResult;
             // Assert
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
-            Assert.IsType<List<BugResultDTO>>(result.Value);
-            Assert.Equal(2,(result.Value as List<BugResultDTO>).Count);
+            Assert.IsType<BugResult>(result.Value);
+            Assert.Equal(2,((result.Value as BugResult).bugs as List<BugResultDTO>).Count);
         }
 
         [Fact]
@@ -59,8 +59,8 @@ namespace TestBugsManager
             var result = _bugController.Get(bugQueryParams) as ObjectResult;
             // Assert
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
-            Assert.IsType<List<BugResultDTO>>(result.Value);
-            Assert.Equal(3, (result.Value as List<BugResultDTO>).Count);
+            Assert.IsType<BugResult>(result.Value);
+            Assert.Equal(3, ((result.Value as BugResult).bugs as List<BugResultDTO>).Count);
         }
 
         [Fact]
@@ -75,8 +75,8 @@ namespace TestBugsManager
             var result = _bugController.Get(bugQueryParams) as ObjectResult;
             // Assert
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
-            Assert.IsType<List<BugResultDTO>>(result.Value);
-            Assert.Equal(3, (result.Value as List<BugResultDTO>).Count);
+            Assert.IsType<BugResult>(result.Value);
+            Assert.Equal(3, ((result.Value as BugResult).bugs as List<BugResultDTO>).Count);
         }
 
         [Fact]
@@ -91,8 +91,8 @@ namespace TestBugsManager
             var result = _bugController.Get(bugQueryParams) as ObjectResult;
             // Assert
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
-            Assert.IsType<List<BugResultDTO>>(result.Value);
-            Assert.Equal(3, (result.Value as List<BugResultDTO>).Count);
+            Assert.IsType<BugResult>(result.Value);
+            Assert.Equal(3, ((result.Value as BugResult).bugs as List<BugResultDTO>).Count);
         }
 
         [Fact]

@@ -69,8 +69,9 @@ namespace TestBugsManager
                     && (b.UserId == bugQueryParams.UserId || bugQueryParams.UserId == null)
                     && (bugQueryParams.StartDate <= b.CreationDate || bugQueryParams.StartDate == null)
                     && (b.CreationDate <= bugQueryParams.EndDate || bugQueryParams.EndDate == null))
-                .Select(b => { 
-                    b.User = new User() {Name = "Pepe"}; 
+                .Select(b => {
+                    b.User = new User() {Name = "Pepe"};
+                    b.Project = new Project() { Name = "My project" };
                     return BugResultDTO.Map(b); 
                 })
                 .ToList();

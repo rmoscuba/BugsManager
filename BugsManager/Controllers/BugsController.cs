@@ -38,8 +38,8 @@ namespace BugsManager.Controllers
             }
 
             var bugs = _repository.Bug.GetAllBugsByParams(bugQueryParams, trackChanges: false);
-            if (bugs is null) { return NotFound(); }
-            else { return Ok(bugs); }
+            if (!bugs.Any()) { return NotFound(); }
+            else { return Ok(new BugResult(){ bugs = (List<BugResultDTO>)bugs }); }
         }
 
 
