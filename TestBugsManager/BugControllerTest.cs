@@ -15,11 +15,19 @@ namespace TestBugsManager
     {
         private readonly BugsController _bugController;
         private readonly IRepositoryManager _repositoryManager;
+        private readonly DefaultHttpContext _context;
 
         public BugControllerTest()
         {
             _repositoryManager = new RepositoryManagerFake();
-            _bugController = new BugsController(_repositoryManager);
+            _context = new DefaultHttpContext();
+            _bugController = new BugsController(_repositoryManager)
+            {
+                ControllerContext = new ControllerContext
+                {
+                    HttpContext = _context
+                }
+            };
         }
 
         [Fact]
@@ -98,5 +106,48 @@ namespace TestBugsManager
             Assert.Equal(StatusCodes.Status400BadRequest, result.StatusCode);
         }
 
+        [Fact]
+        public void Add_BugInvalidObjectPassed_ReturnsBadRequest()
+        {
+            // Arrange
+            var missingItem = new BugDTO()
+            {
+                Description = "Missing"
+            };
+            _bugController.ModelState.AddModelError("Project", "Required");
+            _bugController.ModelState.AddModelError("User", "Required");
+            // Act
+            var badResponse = _bugController.Post(missingItem);
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(badResponse);
+        }
+
+        [Fact]
+        public void Add_BugObject_ReturnsOk()
+        {
+            // Arrange
+            var missingItem = new BugDTO()
+            {
+                Project = new Guid("147528c3-f1ea-4768-bdb7-fa05c2437990"),
+                User = new Guid("3ca8c63c-b419-4587-a2b4-2cb91126dd68"),
+                Description = "Contract history. When applying more than one filter, it does not return information.",
+            };
+            // Act
+            var okResponse = _bugController.Post(missingItem);
+            // Assert
+            Assert.IsType<OkObjectResult> (okResponse);
+        }
+
+        [Fact]
+        public void CallPostMethodWithQueryParamsReturns405StatusCode()
+        {
+            // Arrange
+            var nullItem = new BugDTO();
+            _bugController.HttpContext.Request.QueryString = new QueryString("?project_id=1 ");
+            // Act
+            var notAllowedResponse = _bugController.Post(nullItem) as StatusCodeResult;
+            // Assert
+            Assert.Equal(StatusCodes.Status405MethodNotAllowed, notAllowedResponse.StatusCode);
+        }
     }
 }

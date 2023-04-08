@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using BugsManager.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace BugsManager.Controllers
 {
@@ -46,6 +47,10 @@ namespace BugsManager.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] BugDTO value)
         {
+            if (Request.Query.Any())
+            {
+                return StatusCode(StatusCodes.Status405MethodNotAllowed);
+            }
 
             if (!ModelState.IsValid)
             {
