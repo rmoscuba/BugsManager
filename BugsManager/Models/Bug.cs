@@ -11,6 +11,10 @@ namespace BugsManager.Models
     [Table("Bug")]
     public class Bug
     {
+        public Bug()
+        {
+            CreationDate = DateTime.Now;
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }

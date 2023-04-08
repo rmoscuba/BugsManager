@@ -1,6 +1,7 @@
 ﻿using BugsManager.Contexts;
 using BugsManager.Interfaces;
 using BugsManager.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,8 @@ namespace BugsManager.Repositories
                     && (bugQueryParams.StartDate <= b.CreationDate || bugQueryParams.StartDate == null)
                     && (b.CreationDate <= bugQueryParams.EndDate || bugQueryParams.EndDate == null), 
                     trackChanges)
+                .Include(b => b.User)
+                .Include(b => b.Project)
                 .Select(b => BugResultDTO.Map(b))
                 .ToList();
         }

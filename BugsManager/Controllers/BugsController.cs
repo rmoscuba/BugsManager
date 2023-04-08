@@ -62,7 +62,7 @@ namespace BugsManager.Controllers
                 Bug bug = BugDTO.Map(value);
                 _repository.Bug.CreateBug(bug);
                 _repository.Save();
-                return Ok(bug);
+                return Ok();
             }
             catch (DbUpdateException e)
             {

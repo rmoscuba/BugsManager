@@ -126,16 +126,16 @@ namespace TestBugsManager
         public void Add_BugObject_ReturnsOk()
         {
             // Arrange
-            var missingItem = new BugDTO()
+            var bug = new BugDTO()
             {
                 Project = new Guid("147528c3-f1ea-4768-bdb7-fa05c2437990"),
                 User = new Guid("3ca8c63c-b419-4587-a2b4-2cb91126dd68"),
                 Description = "Contract history. When applying more than one filter, it does not return information.",
             };
             // Act
-            var okResponse = _bugController.Post(missingItem);
+            var okResponse = _bugController.Post(bug);
             // Assert
-            Assert.IsType<OkObjectResult> (okResponse);
+            Assert.IsType<OkResult> (okResponse);
         }
 
         [Fact]
