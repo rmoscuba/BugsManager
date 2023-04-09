@@ -26,5 +26,14 @@ Project:
 
 ## Backend design
 
+Created a .Net Core Web Api Project for adding and filtering bugs.
+
 We use the Repository pattern to allow to separate the data access logic and the underlying data source 
 from the business logic for better maintainability, scalability, and testability of the code.
+
+## Front end design
+
+Created a traditional class components based React application, to support bugs assignment according to 
+implemented web api methods. Find it in ClientApp folder.
+
+
