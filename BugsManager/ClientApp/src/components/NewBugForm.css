@@ -1,0 +1,30 @@
+.new-bug-form {
+    position: absolute;
+    z-index: 101;
+    background-color: #fefefe;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid gray;
+    width: 435px;
+    height: 280px;
+    border-radius: 4px;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.error-message {
+    height: 24px;
+    color:red;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+.info-message {
+    height: 24px;
+    color: darkblue;
+    margin-bottom: 4px;
+    margin-inline-start: 1px;
+}

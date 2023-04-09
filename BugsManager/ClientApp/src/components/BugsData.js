@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import Filters from './Filters.js'
+import Filters from './Filters.js';
+import NewBugForm from './NewBugForm.js'
 
 export class BugsData extends Component {
   static displayName = BugsData.name;
 
   constructor(props) {
     super(props);
-    this.state = { bugs: [], loading: true, usersList:[], projectsList:[], startDate:'2012-12-12', endDate:'', userId:'', projectId:'' };
+    this.state = { bugs: [], loading: true, usersList:[], projectsList:[], startDate:'2012-12-12', endDate:'', userId:'', projectId:'', open:false };
   }
 
   componentDidMount() {
@@ -58,16 +59,22 @@ export class BugsData extends Component {
         userIdValue={this.state.userId}
         projectIdValue={this.state.projectId}
       />
+      <button className='add-button' onClick={this.changeModal} >Add new bug</button>
       {BugsData.renderBugsTable(this.state.bugs)}
       </>;
 
     return (
       <div>
+        {this.state.open && <NewBugForm updateTable={this.populateBugsData} closeModal={this.changeModal} usersList={this.state.usersList} projectsList={this.state.projectsList}/>}
         <h1 id="tabelLabel">Dashboard of all bugs</h1>
         <p>Here find the list of all the bugs in the bugs manager.</p>
         {contents}
       </div>
     );
+  }
+
+  changeModal=()=>{
+    this.setState({...this.state, open:!this.state.open})
   }
 
   updateStartDate=async (event)=>{
@@ -103,7 +110,7 @@ export class BugsData extends Component {
     this.setState({...this.state,  projectsList: data.projects });
   }
 
-  async populateBugsData() {
+   populateBugsData=async()=> {
     let request='bugs';
     if(this.state.startDate!=''){
       request+='?start_date='+this.state.startDate;
